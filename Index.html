@@ -56,7 +56,7 @@ body {
 
 <div class="header text-center">
   <h1><i class="fa-solid fa-database"></i> Dashboard PPKS</h1>
-  <p>Sistem Pendataan Sosial Menggunakan Google Sheets Database</p>
+  <p>Sistem Pendataan PPKS Kota Batu</p>
 </div>
 
 <div class="row">
@@ -77,8 +77,36 @@ body {
 
 <div class="col-md-4">
   <div class="card-box text-center">
-    <h5>Total Lansia</h5>
+    <h5>Total Lansia Terlantar</h5>
     <h2 id="totalLansia">0</h2>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card-box text-center">
+    <h5>Total Orang Terlantar</h5>
+    <h2 id="totalOrangTerlantar">0</h2>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card-box text-center">
+    <h5>Total Anak Terlantar</h5>
+    <h2 id="totalAnakTerlantar">0</h2>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card-box text-center">
+    <h5>Total Gelandang & Pengemis</h5>
+    <h2 id="totalGepeng">0</h2>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card-box text-center">
+    <h5>Total Anak Jalanan</h5>
+    <h2 id="totalAnjal">0</h2>
   </div>
 </div>
 
@@ -89,10 +117,6 @@ body {
 <h3 class="mb-3">Input Data</h3>
 
 <div class="row g-3">
-
-<div class="col-md-2">
-<input type="text" id="no" class="form-control" placeholder="No">
-</div>
 
 <div class="col-md-3">
 <input type="text" id="nik" class="form-control" placeholder="NIK">
@@ -202,11 +226,11 @@ const tbody = document.getElementById("tbody");
 
 tbody.innerHTML = "";
 
-data.forEach(item => {
+data.forEach((item, index) => {
 
 tbody.innerHTML += `
 <tr>
-<td>${item.NO || ''}</td>
+<td>${index + 1}</td>
 <td>${item.NIK || ''}</td>
 <td>${item.NAMA || ''}</td>
 <td>${item.KOTA || ''}</td>
@@ -232,10 +256,29 @@ const totalLansia = data.filter(item =>
 (item['JENIS PPKS'] || '').includes('Lansia')
 ).length;
 
+const totalOrangTerlantar = data.filter(item =>
+(item['JENIS PPKS'] || '').includes('Orang Terlantar')
+).length;
+
+const totalAnakTerlantar = data.filter(item =>
+(item['JENIS PPKS'] || '').includes('Anak Terlantar')
+).length;
+
+const totalGepeng = data.filter(item =>
+(item['JENIS PPKS'] || '').includes('Gepeng')
+).length;
+
+const totalAnjal = data.filter(item =>
+(item['JENIS PPKS'] || '').includes('Anak Jalanan')
+).length;
 
 document.getElementById('totalData').innerText = totalData;
 document.getElementById('totalODGJ').innerText = totalODGJ;
 document.getElementById('totalLansia').innerText = totalLansia;
+document.getElementById('totalOrangTerlantar').innerText = totalOrangTerlantar;
+document.getElementById('totalAnakTerlantar').innerText = totalAnakTerlantar;
+document.getElementById('totalGepeng').innerText = totalGepeng;
+document.getElementById('totalAnjal').innerText = totalAnjal;
 
 }
 
@@ -243,7 +286,6 @@ function kirimData() {
 
 const data = {
 
-no: document.getElementById('no').value,
 nik: document.getElementById('nik').value,
 tanggal: document.getElementById('tanggal').value,
 nama: document.getElementById('nama').value,

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard PPKS</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+body {
+  background: #f4f7fc;
+  font-family: Arial;
+}
+
+.header {
+  background: linear-gradient(135deg,#0d6efd,#6610f2);
+  color: white;
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card-box {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.table thead {
+  background: #0d6efd;
+  color: white;
+}
+
+.btn-custom {
+  border-radius: 10px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container py-4">
+
+<div class="header text-center">
+  <h1><i class="fa-solid fa-database"></i> Dashboard PPKS</h1>
+  <p>Sistem Pendataan Sosial Menggunakan Google Sheets Database</p>
+</div>
+
+<div class="row">
+
+<div class="col-md-4">
+  <div class="card-box text-center">
+    <h5>Total Data</h5>
+    <h2 id="totalData">0</h2>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card-box text-center">
+    <h5>Total ODGJ</h5>
+    <h2 id="totalODGJ">0</h2>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card-box text-center">
+    <h5>Total Lansia</h5>
+    <h2 id="totalLansia">0</h2>
+  </div>
+</div>
+
+</div>
+
+<div class="card-box mt-4">
+
+<h3 class="mb-3">Input Data</h3>
+
+<div class="row g-3">
+
+<div class="col-md-2">
+<input type="text" id="no" class="form-control" placeholder="No">
+</div>
+
+<div class="col-md-3">
+<input type="text" id="nik" class="form-control" placeholder="NIK">
+</div>
+
+<div class="col-md-3">
+<input type="text" id="tanggal" class="form-control" placeholder="Tanggal">
+</div>
+
+<div class="col-md-4">
+<input type="text" id="nama" class="form-control" placeholder="Nama">
+</div>
+
+<div class="col-md-3">
+<input type="text" id="kota" class="form-control" placeholder="Kota">
+</div>
+
+<div class="col-md-3">
+<input type="text" id="kecamatan" class="form-control" placeholder="Kecamatan">
+</div>
+
+<div class="col-md-3">
+<input type="text" id="desa" class="form-control" placeholder="Desa">
+</div>
+
+<div class="col-md-3">
+<input type="text" id="alamat" class="form-control" placeholder="Alamat">
+</div>
+
+<div class="col-md-6">
+<input type="text" id="jenis" class="form-control" placeholder="Jenis PPKS">
+</div>
+
+<div class="col-md-6">
+<input type="text" id="indikator" class="form-control" placeholder="Indikator Kinerja">
+</div>
+
+<div class="col-md-12">
+<button onclick="kirimData()" class="btn btn-primary btn-custom w-100">
+<i class="fa-solid fa-paper-plane"></i> Simpan Data
+</button>
+</div>
+
+</div>
+
+</div>
+
+<div class="table-container mt-4">
+
+<div class="d-flex justify-content-between mb-3">
+<h3>Database PPKS</h3>
+
+<input type="text" id="searchInput" class="form-control w-25" placeholder="Cari nama...">
+</div>
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-hover">
+
+<thead>
+<tr>
+<th>NO</th>
+<th>NAMA</th>
+<th>KOTA</th>
+<th>KECAMATAN</th>
+<th>JENIS PPKS</th>
+<th>LAYANAN</th>
+</tr>
+</thead>
+
+<tbody id="tbody"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const API_URL = "https://script.google.com/macros/s/AKfycbwSZ830C0Ny8KkoJfus0prvcru2j46NSOjd-8L79saWSCIQksWV5V83HcQXZ522kO6BDg/exec";
+
+let semuaData = [];
+
+function loadData() {
+
+fetch(API_URL)
+.then(res => res.json())
+.then(data => {
+
+semuaData = data;
+
+renderTable(data);
+
+statistik(data);
+
+});
+
+}
+
+function renderTable(data) {
+
+const tbody = document.getElementById("tbody");
+
+tbody.innerHTML = "";
+
+data.forEach(item => {
+
+tbody.innerHTML += `
+<tr>
+<td>${item.NO || ''}</td>
+<td>${item.NAMA || ''}</td>
+<td>${item.KOTA || ''}</td>
+<td>${item.KECAMATAN || ''}</td>
+<td>${item['JENIS PPKS'] || ''}</td>
+<td>${item['INDIKATOR KINERJA'] || ''}</td>
+</tr>
+`;
+
+});
+
+}
+
+function statistik(data) {
+
+const totalData = data.length;
+
+const totalODGJ = data.filter(item =>
+(item['JENIS PPKS'] || '').includes('ODGJ')
+).length;
+
+const totalLansia = data.filter(item =>
+(item['JENIS PPKS'] || '').includes('Lansia')
+).length;
+
+
+document.getElementById('totalData').innerText = totalData;
+document.getElementById('totalODGJ').innerText = totalODGJ;
+document.getElementById('totalLansia').innerText = totalLansia;
+
+}
+
+function kirimData() {
+
+const data = {
+
+no: document.getElementById('no').value,
+nik: document.getElementById('nik').value,
+tanggal: document.getElementById('tanggal').value,
+nama: document.getElementById('nama').value,
+kota: document.getElementById('kota').value,
+kecamatan: document.getElementById('kecamatan').value,
+desa: document.getElementById('desa').value,
+alamat: document.getElementById('alamat').value,
+jenis: document.getElementById('jenis').value,
+indikator: document.getElementById('indikator').value
+
+};
+
+fetch(API_URL, {
+method: 'POST',
+body: JSON.stringify(data)
+})
+.then(res => res.json())
+.then(response => {
+
+alert('Data berhasil disimpan');
+
+loadData();
+
+});
+
+}
+
+
+document.getElementById('searchInput').addEventListener('keyup', function() {
+
+const keyword = this.value.toLowerCase();
+
+const hasil = semuaData.filter(item =>
+(item.NAMA || '').toLowerCase().includes(keyword)
+);
+
+renderTable(hasil);
+
+});
+
+loadData();
+
+</script>
+
+</body>
+</html>

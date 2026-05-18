@@ -12,7 +12,7 @@
 
 body {
   background: #f4f7fc;
-  font-family: Arial;
+  font-family: Poppins;
 }
 
 .header {
@@ -127,7 +127,7 @@ body {
 </div>
 
 <div class="col-md-6">
-<input type="text" id="indikator" class="form-control" placeholder="Indikator Kinerja">
+<input type="text" id="jenis layanan" class="form-control" placeholder="Jenis Layanan">
 </div>
 
 <div class="col-md-12">
@@ -155,11 +155,12 @@ body {
 <thead>
 <tr>
 <th>NO</th>
+<th>NIK</th>
 <th>NAMA</th>
 <th>KOTA</th>
 <th>KECAMATAN</th>
 <th>JENIS PPKS</th>
-<th>LAYANAN</th>
+<th>JENIS LAYANAN</th>
 </tr>
 </thead>
 
@@ -206,11 +207,12 @@ data.forEach(item => {
 tbody.innerHTML += `
 <tr>
 <td>${item.NO || ''}</td>
+<td>${item.NIK || ''}</td>
 <td>${item.NAMA || ''}</td>
 <td>${item.KOTA || ''}</td>
 <td>${item.KECAMATAN || ''}</td>
 <td>${item['JENIS PPKS'] || ''}</td>
-<td>${item['INDIKATOR KINERJA'] || ''}</td>
+<td>${item['JENIS LAYANAN'] || ''}</td>
 </tr>
 `;
 

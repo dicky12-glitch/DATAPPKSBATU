@@ -3,332 +3,843 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard PPKS</title>
-
+<title>Dashboard PPKS – Kota Batu</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+:root {
+  --blue: #1a56db;
+  --blue-light: #e8f0fe;
+  --blue-dark: #1e3a8a;
+  --purple: #7c3aed;
+  --teal: #0f766e;
+  --teal-light: #e0f7f4;
+  --amber: #b45309;
+  --amber-light: #fef3c7;
+  --rose: #be185d;
+  --rose-light: #fce7f3;
+  --green: #15803d;
+  --green-light: #dcfce7;
+  --slate: #475569;
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: #f4f7fc;
-  font-family: Poppins;
+  background: var(--bg);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-.header {
-  background: linear-gradient(135deg,#0d6efd,#6610f2);
-  color: white;
-  padding: 30px;
-  border-radius: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+/* ── HEADER ── */
+.site-header {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--purple) 100%);
+  color: #fff;
+  padding: 28px 32px 24px;
+  border-radius: 0 0 24px 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 8px 24px rgba(26,86,219,.18);
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
+.site-header .logo-icon {
+  width: 52px; height: 52px;
+  background: rgba(255,255,255,.18);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+.site-header h1 { font-size: 22px; font-weight: 700; letter-spacing: -.3px; }
+.site-header p  { font-size: 13px; opacity: .78; margin-top: 2px; }
 
-.card-box {
-  background: white;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+/* ── STAT CARDS ── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: box-shadow .18s;
+}
+.stat-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.07); }
+.stat-card .label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.stat-card .value { font-size: 28px; font-weight: 700; line-height: 1; }
+.stat-card .icon  { font-size: 20px; margin-bottom: 6px; }
+
+.sc-blue   .icon, .sc-blue   .value { color: var(--blue); }
+.sc-teal   .icon, .sc-teal   .value { color: var(--teal); }
+.sc-amber  .icon, .sc-amber  .value { color: var(--amber); }
+.sc-rose   .icon, .sc-rose   .value { color: var(--rose); }
+.sc-green  .icon, .sc-green  .value { color: var(--green); }
+.sc-purple .icon, .sc-purple .value { color: var(--purple); }
+.sc-slate  .icon, .sc-slate  .value { color: var(--slate); }
+
+/* ── PANEL ── */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
   margin-bottom: 20px;
 }
+.panel-title {
+  font-size: 15px; font-weight: 700; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.panel-title i { color: var(--blue); }
 
-.table-container {
-  background: white;
-  padding: 20px;
+/* ── FILTER BAR ── */
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+  gap: 10px;
+  align-items: end;
+}
+.filter-grid label { font-size: 12px; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 4px; }
+.form-control, .form-select {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  background: #f8fafc;
+  transition: border-color .15s;
+  width: 100%;
+}
+.form-control:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: #fff;
+}
+
+/* ── BUTTON ── */
+.btn-primary-custom {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background .15s, transform .1s;
+}
+.btn-primary-custom:hover { background: var(--blue-dark); }
+.btn-primary-custom:active { transform: scale(.98); }
+
+.btn-outline-custom {
+  background: transparent;
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: .15s;
+}
+.btn-outline-custom:hover { background: var(--blue-light); }
+
+.btn-success-custom {
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background .15s;
+}
+.btn-success-custom:hover { background: #166534; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+thead th {
+  background: var(--blue);
+  color: #fff;
+  padding: 10px 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: left;
+  position: sticky;
+  top: 0;
+}
+thead th:first-child { border-radius: 8px 0 0 0; }
+thead th:last-child  { border-radius: 0 8px 0 0; }
+tbody tr { border-bottom: 1px solid #f1f5f9; }
+tbody tr:hover { background: #f8fafc; }
+tbody td { padding: 9px 12px; vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+
+.badge-ppks {
+  display: inline-block;
+  padding: 3px 10px;
   border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.b-odgj    { background: var(--rose-light);  color: var(--rose);  }
+.b-lansia  { background: var(--amber-light); color: var(--amber); }
+.b-anak    { background: var(--blue-light);  color: var(--blue);  }
+.b-gepeng  { background: var(--teal-light);  color: var(--teal);  }
+.b-anjal   { background: var(--green-light); color: var(--green); }
+.b-orang   { background: #f3e8ff;            color: var(--purple);}
+.b-default { background: #f1f5f9;            color: var(--slate); }
+
+/* ── PAGINATION ── */
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.page-btn {
+  min-width: 32px; height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 8px;
+  transition: .15s;
+}
+.page-btn:hover { border-color: var(--blue); color: var(--blue); }
+.page-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+.page-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── MODAL EXPORT ── */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: #fff;
+  border-radius: 18px;
+  padding: 28px 32px;
+  width: 420px;
+  max-width: 96vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,.18);
+}
+.modal-box h4 { font-size: 17px; font-weight: 700; margin-bottom: 18px; }
+.modal-box label { font-size: 12px; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 4px; }
+.modal-box select { margin-bottom: 16px; }
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+.btn-cancel {
+  background: transparent; border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--slate);
+}
+.btn-cancel:hover { background: #f1f5f9; }
+
+/* ── LOADING ── */
+.loading-row td { text-align: center; padding: 40px; color: var(--text-muted); }
+.spinner {
+  display: inline-block;
+  width: 22px; height: 22px;
+  border: 3px solid #e2e8f0;
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .site-header { padding: 18px 16px; }
+  .panel { padding: 16px; }
 }
 
-.table thead {
-  background: #0d6efd;
-  color: white;
+/* ── PRINT (laporan) ── */
+@media print {
+  body * { visibility: hidden; }
+  #printArea, #printArea * { visibility: visible; }
+  #printArea { position: fixed; top: 0; left: 0; width: 100%; }
 }
-
-.btn-custom {
-  border-radius: 10px;
-}
-
 </style>
 </head>
 <body>
 
-<div class="container py-4">
-
-<div class="header text-center">
-  <h1><i class="fa-solid fa-database"></i> Dashboard PPKS</h1>
-  <p>Sistem Pendataan PPKS Kota Batu</p>
-</div>
-
-<div class="row">
-
-<div class="col-md-4">
-  <div class="card-box text-center">
-    <h5>Total Data</h5>
-    <h2 id="totalData">0</h2>
+<!-- HEADER -->
+<div class="site-header">
+  <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+  <div>
+    <h1>Dashboard PPKS</h1>
+    <p>Sistem Pendataan Pemerlu Pelayanan Kesejahteraan Sosial – Kota Batu</p>
   </div>
 </div>
 
-<div class="col-md-4">
-  <div class="card-box text-center">
-    <h5>Total ODGJ</h5>
-    <h2 id="totalODGJ">0</h2>
+<div class="container-fluid px-3 px-md-4">
+
+<!-- STAT CARDS -->
+<div class="stat-grid" id="statGrid">
+  <div class="stat-card sc-blue">
+    <div class="icon"><i class="fa-solid fa-database"></i></div>
+    <div class="label">Total Data</div>
+    <div class="value" id="statTotal">–</div>
+  </div>
+  <div class="stat-card sc-rose">
+    <div class="icon"><i class="fa-solid fa-brain"></i></div>
+    <div class="label">ODGJ</div>
+    <div class="value" id="statODGJ">–</div>
+  </div>
+  <div class="stat-card sc-amber">
+    <div class="icon"><i class="fa-solid fa-person-cane"></i></div>
+    <div class="label">Lansia Terlantar</div>
+    <div class="value" id="statLansia">–</div>
+  </div>
+  <div class="stat-card sc-purple">
+    <div class="icon"><i class="fa-solid fa-person"></i></div>
+    <div class="label">Orang Terlantar</div>
+    <div class="value" id="statOrang">–</div>
+  </div>
+  <div class="stat-card sc-blue">
+    <div class="icon"><i class="fa-solid fa-child"></i></div>
+    <div class="label">Anak Terlantar</div>
+    <div class="value" id="statAnak">–</div>
+  </div>
+  <div class="stat-card sc-teal">
+    <div class="icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+    <div class="label">Gepeng</div>
+    <div class="value" id="statGepeng">–</div>
+  </div>
+  <div class="stat-card sc-green">
+    <div class="icon"><i class="fa-solid fa-road"></i></div>
+    <div class="label">Anak Jalanan</div>
+    <div class="value" id="statAnjal">–</div>
   </div>
 </div>
 
-<div class="col-md-4">
-  <div class="card-box text-center">
-    <h5>Total Lansia Terlantar</h5>
-    <h2 id="totalLansia">0</h2>
+<!-- FILTER PANEL -->
+<div class="panel">
+  <div class="panel-title"><i class="fa-solid fa-filter"></i> Filter Data</div>
+  <div class="filter-grid">
+    <div>
+      <label>Cari Nama / NIK</label>
+      <input type="text" id="fSearch" class="form-control" placeholder="Ketik nama atau NIK…">
+    </div>
+    <div>
+      <label>Jenis PPKS</label>
+      <select id="fJenis" class="form-select">
+        <option value="">– Semua Jenis –</option>
+        <option>ODGJ</option>
+        <option>Lansia Terlantar</option>
+        <option>Orang Terlantar</option>
+        <option>Anak Terlantar</option>
+        <option>Gepeng</option>
+        <option>Anak Jalanan</option>
+      </select>
+    </div>
+    <div>
+      <label>Kecamatan</label>
+      <select id="fKecamatan" class="form-select">
+        <option value="">– Semua Kecamatan –</option>
+      </select>
+    </div>
+    <div>
+      <label>Tanggal Mulai</label>
+      <input type="date" id="fTglMulai" class="form-control">
+    </div>
+    <div>
+      <label>Tanggal Akhir</label>
+      <input type="date" id="fTglAkhir" class="form-control">
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;padding-bottom:1px;">
+      <button class="btn-primary-custom" onclick="applyFilter()">
+        <i class="fa-solid fa-magnifying-glass"></i> Filter
+      </button>
+      <button class="btn-outline-custom" onclick="resetFilter()">
+        <i class="fa-solid fa-rotate-left"></i> Reset
+      </button>
+    </div>
   </div>
 </div>
 
-<div class="col-md-4">
-  <div class="card-box text-center">
-    <h5>Total Orang Terlantar</h5>
-    <h2 id="totalOrangTerlantar">0</h2>
+<!-- TABLE PANEL -->
+<div class="panel">
+  <div class="panel-title" style="justify-content:space-between;flex-wrap:wrap;gap:8px;">
+    <span><i class="fa-solid fa-table-list"></i> Database PPKS</span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span id="recordInfo" style="font-size:12px;color:var(--text-muted);align-self:center;font-weight:400;"></span>
+      <button class="btn-success-custom" onclick="openExportModal()">
+        <i class="fa-solid fa-file-excel"></i> Export Laporan Bulanan
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Tanggal</th>
+          <th>NIK</th>
+          <th>Nama</th>
+          <th>Kota</th>
+          <th>Kecamatan</th>
+          <th>Desa</th>
+          <th>Alamat</th>
+          <th>Jenis PPKS</th>
+          <th>Jenis Layanan</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="loading-row">
+          <td colspan="10"><span class="spinner"></span> Memuat data…</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination-bar" id="paginationBar"></div>
+</div>
+
+</div><!-- /container -->
+
+<!-- EXPORT MODAL -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal-box">
+    <h4><i class="fa-solid fa-file-excel" style="color:var(--green);margin-right:8px;"></i>Export Laporan Bulanan</h4>
+    <label>Bulan</label>
+    <select id="expBulan" class="form-select">
+      <option value="1">Januari</option><option value="2">Februari</option>
+      <option value="3">Maret</option><option value="4">April</option>
+      <option value="5">Mei</option><option value="6">Juni</option>
+      <option value="7">Juli</option><option value="8">Agustus</option>
+      <option value="9">September</option><option value="10">Oktober</option>
+      <option value="11">November</option><option value="12">Desember</option>
+    </select>
+    <label>Tahun</label>
+    <select id="expTahun" class="form-select"></select>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:4px;line-height:1.5;">
+      Laporan akan berisi rekapitulasi indikator pelayanan berdasarkan data pada bulan yang dipilih, dikelompokkan per kecamatan (Batu, Bumiaji, Junrejo).
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeExportModal()">Batal</button>
+      <button class="btn-success-custom" onclick="generateReport()">
+        <i class="fa-solid fa-print"></i> Buat & Cetak Laporan
+      </button>
+    </div>
   </div>
 </div>
 
-<div class="col-md-4">
-  <div class="card-box text-center">
-    <h5>Total Anak Terlantar</h5>
-    <h2 id="totalAnakTerlantar">0</h2>
-  </div>
-</div>
-
-<div class="col-md-4">
-  <div class="card-box text-center">
-    <h5>Total Gelandang & Pengemis</h5>
-    <h2 id="totalGepeng">0</h2>
-  </div>
-</div>
-
-<div class="col-md-4">
-  <div class="card-box text-center">
-    <h5>Total Anak Jalanan</h5>
-    <h2 id="totalAnjal">0</h2>
-  </div>
-</div>
-
-</div>
-
-<div class="card-box mt-4">
-
-<h3 class="mb-3">Input Data</h3>
-
-<div class="row g-3">
-
-<div class="col-md-3">
-<input type="text" id="nik" class="form-control" placeholder="NIK">
-</div>
-
-<div class="col-md-3">
-<input type="text" id="tanggal" class="form-control" placeholder="Tanggal">
-</div>
-
-<div class="col-md-4">
-<input type="text" id="nama" class="form-control" placeholder="Nama">
-</div>
-
-<div class="col-md-3">
-<input type="text" id="kota" class="form-control" placeholder="Kota">
-</div>
-
-<div class="col-md-3">
-<input type="text" id="kecamatan" class="form-control" placeholder="Kecamatan">
-</div>
-
-<div class="col-md-3">
-<input type="text" id="desa" class="form-control" placeholder="Desa">
-</div>
-
-<div class="col-md-3">
-<input type="text" id="alamat" class="form-control" placeholder="Alamat">
-</div>
-
-<div class="col-md-6">
-<input type="text" id="jenis" class="form-control" placeholder="Jenis PPKS">
-</div>
-
-<div class="col-md-6">
-<input type="text" id="jenis layanan" class="form-control" placeholder="Jenis Layanan">
-</div>
-
-<div class="col-md-12">
-<button onclick="kirimData()" class="btn btn-primary btn-custom w-100">
-<i class="fa-solid fa-paper-plane"></i> Simpan Data
-</button>
-</div>
-
-</div>
-
-</div>
-
-<div class="table-container mt-4">
-
-<div class="d-flex justify-content-between mb-3">
-<h3>Database PPKS</h3>
-
-<input type="text" id="searchInput" class="form-control w-25" placeholder="Cari nama...">
-</div>
-
-<div class="table-responsive">
-
-<table class="table table-bordered table-hover">
-
-<thead>
-<tr>
-<th>NO</th>
-<th>NIK</th>
-<th>NAMA</th>
-<th>KOTA</th>
-<th>KECAMATAN</th>
-<th>JENIS PPKS</th>
-<th>JENIS LAYANAN</th>
-</tr>
-</thead>
-
-<tbody id="tbody"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
+<!-- PRINT AREA (hidden, populated on export) -->
+<div id="printArea" style="display:none;"></div>
 
 <script>
-
 const API_URL = "https://script.google.com/macros/s/AKfycbwSZ830C0Ny8KkoJfus0prvcru2j46NSOjd-8L79saWSCIQksWV5V83HcQXZ522kO6BDg/exec";
 
-let semuaData = [];
+let allData = [];
+let filtered = [];
+const PER_PAGE = 25;
+let currentPage = 1;
 
-function loadData() {
+const BULAN_NAMA = ["","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+const KECAMATAN_LIST = ["Batu","Bumiaji","Junrejo"];
 
-fetch(API_URL)
-.then(res => res.json())
-.then(data => {
-
-semuaData = data;
-
-renderTable(data);
-
-statistik(data);
-
-});
-
-}
-
-function renderTable(data) {
-
-const tbody = document.getElementById("tbody");
-
-tbody.innerHTML = "";
-
-data.forEach((item, index) => {
-
-tbody.innerHTML += `
-<tr>
-<td>${index + 1}</td>
-<td>${item.NIK || ''}</td>
-<td>${item.NAMA || ''}</td>
-<td>${item.KOTA || ''}</td>
-<td>${item.KECAMATAN || ''}</td>
-<td>${item['JENIS PPKS'] || ''}</td>
-<td>${item['JENIS LAYANAN'] || ''}</td>
-</tr>
-`;
-
-});
-
-}
-
-function statistik(data) {
-
-const totalData = data.length;
-
-const totalODGJ = data.filter(item =>
-(item['JENIS PPKS'] || '').includes('ODGJ')
-).length;
-
-const totalLansia = data.filter(item =>
-(item['JENIS PPKS'] || '').includes('Lansia')
-).length;
-
-const totalOrangTerlantar = data.filter(item =>
-(item['JENIS PPKS'] || '').includes('Orang Terlantar')
-).length;
-
-const totalAnakTerlantar = data.filter(item =>
-(item['JENIS PPKS'] || '').includes('Anak Terlantar')
-).length;
-
-const totalGepeng = data.filter(item =>
-(item['JENIS PPKS'] || '').includes('Gepeng')
-).length;
-
-const totalAnjal = data.filter(item =>
-(item['JENIS PPKS'] || '').includes('Anak Jalanan')
-).length;
-
-document.getElementById('totalData').innerText = totalData;
-document.getElementById('totalODGJ').innerText = totalODGJ;
-document.getElementById('totalLansia').innerText = totalLansia;
-document.getElementById('totalOrangTerlantar').innerText = totalOrangTerlantar;
-document.getElementById('totalAnakTerlantar').innerText = totalAnakTerlantar;
-document.getElementById('totalGepeng').innerText = totalGepeng;
-document.getElementById('totalAnjal').innerText = totalAnjal;
-
-}
-
-function kirimData() {
-
-const data = {
-
-nik: document.getElementById('nik').value,
-tanggal: document.getElementById('tanggal').value,
-nama: document.getElementById('nama').value,
-kota: document.getElementById('kota').value,
-kecamatan: document.getElementById('kecamatan').value,
-desa: document.getElementById('desa').value,
-alamat: document.getElementById('alamat').value,
-jenis: document.getElementById('jenis').value,
-indikator: document.getElementById('indikator').value
-
+/* ── helpers ── */
+const BULAN_ID = {
+  'januari':0,'februari':1,'maret':2,'april':3,'mei':4,'juni':5,
+  'juli':6,'agustus':7,'september':8,'oktober':9,'november':10,'desember':11
 };
 
-fetch(API_URL, {
-method: 'POST',
-body: JSON.stringify(data)
-})
-.then(res => res.json())
-.then(response => {
+function parseDate(raw) {
+  if (!raw) return null;
+  const s = String(raw).trim();
 
-alert('Data berhasil disimpan');
-
-loadData();
-
-});
-
+  // "Senin, 1 Januari 2024" or "1 Januari 2024"
+  const mID = s.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
+  if (mID) {
+    const mon = BULAN_ID[mID[2].toLowerCase()];
+    if (mon !== undefined) return new Date(parseInt(mID[3]), mon, parseInt(mID[1]));
+  }
+  // ISO YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return new Date(s);
+  // DD/MM/YYYY or DD-MM-YYYY
+  const mDMY = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+  if (mDMY) {
+    let y = parseInt(mDMY[3]); if (y < 100) y += 2000;
+    return new Date(y, parseInt(mDMY[2])-1, parseInt(mDMY[1]));
+  }
+  // Spreadsheet serial (days since Dec 30 1899)
+  if (!isNaN(raw) && Number(raw) > 1000) {
+    return new Date((Number(raw) - 25569) * 86400000);
+  }
+  const d = new Date(s);
+  return isNaN(d) ? null : d;
 }
 
+// Get tanggal value from a row — header bisa HARI / TANGGAL atau TANGGAL dll
+function getTgl(item) {
+  return item['HARI / TANGGAL'] || item['HARI/TANGGAL'] || item.TANGGAL ||
+         item['Tanggal'] || item['tanggal'] || item['HARI / Tanggal'] || '';
+}
 
-document.getElementById('searchInput').addEventListener('keyup', function() {
+function fmtDate(raw) {
+  const d = parseDate(raw);
+  if (!d) return raw || '';
+  return d.toLocaleDateString('id-ID', {day:'2-digit', month:'2-digit', year:'numeric'});
+}
 
-const keyword = this.value.toLowerCase();
+function badgeClass(jenis) {
+  if (!jenis) return 'b-default';
+  const j = jenis.toLowerCase();
+  if (j.includes('odgj')) return 'b-odgj';
+  if (j.includes('lansia')) return 'b-lansia';
+  if (j.includes('anak jalanan') || j.includes('anjal')) return 'b-anjal';
+  if (j.includes('anak')) return 'b-anak';
+  if (j.includes('gepeng') || j.includes('gelandang') || j.includes('pengemis')) return 'b-gepeng';
+  if (j.includes('orang terlantar')) return 'b-orang';
+  return 'b-default';
+}
 
-const hasil = semuaData.filter(item =>
-(item.NAMA || '').toLowerCase().includes(keyword)
-);
+/* ── load ── */
+function loadData() {
+  fetch(API_URL)
+    .then(r => r.json())
+    .then(data => {
+      allData = data;
+      buildKecamatanOptions();
+      buildYearOptions();
+      filtered = [...allData];
+      renderStats(filtered);
+      renderTable();
+    })
+    .catch(() => {
+      document.getElementById('tbody').innerHTML =
+        '<tr><td colspan="10" style="text-align:center;padding:40px;color:#dc2626;">Gagal memuat data. Periksa koneksi atau URL API.</td></tr>';
+    });
+}
 
-renderTable(hasil);
+function buildKecamatanOptions() {
+  const sel = document.getElementById('fKecamatan');
+  const set = new Set(allData.map(d => d.KECAMATAN).filter(Boolean));
+  set.forEach(k => {
+    const o = document.createElement('option');
+    o.value = k; o.textContent = k;
+    sel.appendChild(o);
+  });
+}
 
+function buildYearOptions() {
+  const sel = document.getElementById('expTahun');
+  const now = new Date();
+  const years = new Set(allData.map(d => {
+    const p = parseDate(getTgl(d));
+    return p ? p.getFullYear() : null;
+  }).filter(Boolean));
+  years.add(now.getFullYear());
+  [...years].sort((a,b)=>b-a).forEach(y => {
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y;
+    if (y === now.getFullYear()) o.selected = true;
+    sel.appendChild(o);
+  });
+  document.getElementById('expBulan').value = now.getMonth()+1;
+}
+
+/* ── filter ── */
+function applyFilter() {
+  const search    = document.getElementById('fSearch').value.toLowerCase().trim();
+  const jenis     = document.getElementById('fJenis').value.toLowerCase().trim();
+  const kecamatan = document.getElementById('fKecamatan').value.toLowerCase().trim();
+  const tglMulai  = document.getElementById('fTglMulai').value ? new Date(document.getElementById('fTglMulai').value) : null;
+  const tglAkhir  = document.getElementById('fTglAkhir').value ? new Date(document.getElementById('fTglAkhir').value) : null;
+
+  filtered = allData.filter(item => {
+    if (search && !(
+      (item.NAMA || '').toLowerCase().includes(search) ||
+      String(item.NIK || '').includes(search)
+    )) return false;
+
+    if (jenis && !(item['JENIS PPKS'] || '').toLowerCase().includes(jenis)) return false;
+    if (kecamatan && (item.KECAMATAN || '').toLowerCase() !== kecamatan) return false;
+
+    if (tglMulai || tglAkhir) {
+      const d = parseDate(getTgl(item));
+      if (!d) return false;
+      if (tglMulai && d < tglMulai) return false;
+      if (tglAkhir) {
+        const end = new Date(tglAkhir); end.setHours(23,59,59,999);
+        if (d > end) return false;
+      }
+    }
+    return true;
+  });
+
+  currentPage = 1;
+  renderStats(filtered);
+  renderTable();
+}
+
+function resetFilter() {
+  document.getElementById('fSearch').value = '';
+  document.getElementById('fJenis').value = '';
+  document.getElementById('fKecamatan').value = '';
+  document.getElementById('fTglMulai').value = '';
+  document.getElementById('fTglAkhir').value = '';
+  filtered = [...allData];
+  currentPage = 1;
+  renderStats(filtered);
+  renderTable();
+}
+
+// live search
+document.getElementById('fSearch').addEventListener('input', applyFilter);
+
+/* ── stats ── */
+function renderStats(data) {
+  document.getElementById('statTotal').textContent = data.length;
+  document.getElementById('statODGJ').textContent   = data.filter(d => (d['JENIS PPKS']||'').toLowerCase().includes('odgj')).length;
+  document.getElementById('statLansia').textContent = data.filter(d => (d['JENIS PPKS']||'').toLowerCase().includes('lansia')).length;
+  document.getElementById('statOrang').textContent  = data.filter(d => (d['JENIS PPKS']||'').toLowerCase().includes('orang terlantar')).length;
+  document.getElementById('statAnak').textContent   = data.filter(d => {
+    const j = (d['JENIS PPKS']||'').toLowerCase();
+    return j.includes('anak terlantar');
+  }).length;
+  document.getElementById('statGepeng').textContent = data.filter(d => {
+    const j = (d['JENIS PPKS']||'').toLowerCase();
+    return j.includes('gepeng') || j.includes('gelandang') || j.includes('pengemis');
+  }).length;
+  document.getElementById('statAnjal').textContent  = data.filter(d => {
+    const j = (d['JENIS PPKS']||'').toLowerCase();
+    return j.includes('anak jalanan') || j.includes('anjal');
+  }).length;
+}
+
+/* ── table ── */
+function renderTable() {
+  const tbody = document.getElementById('tbody');
+  const total = filtered.length;
+  const pages = Math.max(1, Math.ceil(total / PER_PAGE));
+  currentPage = Math.min(currentPage, pages);
+
+  const start = (currentPage - 1) * PER_PAGE;
+  const slice = filtered.slice(start, start + PER_PAGE);
+
+  document.getElementById('recordInfo').textContent =
+    `Menampilkan ${start+1}–${Math.min(start+PER_PAGE, total)} dari ${total} data`;
+
+  if (!slice.length) {
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px;color:#64748b;">Tidak ada data ditemukan.</td></tr>';
+    document.getElementById('paginationBar').innerHTML = '';
+    return;
+  }
+
+  tbody.innerHTML = slice.map((item, i) => {
+    const jenis = item['JENIS PPKS'] || '';
+    return `<tr>
+      <td>${start + i + 1}</td>
+      <td style="white-space:nowrap">${fmtDate(getTgl(item))}</td>
+      <td style="font-family:monospace;font-size:12px">${item.NIK || ''}</td>
+      <td style="font-weight:500">${item.NAMA || ''}</td>
+      <td>${item.KOTA || ''}</td>
+      <td>${item.KECAMATAN || ''}</td>
+      <td>${item.DESA || item['DESA'] || ''}</td>
+      <td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${item.ALAMAT||''}">${item.ALAMAT || ''}</td>
+      <td><span class="badge-ppks ${badgeClass(jenis)}">${jenis}</span></td>
+      <td>${item['JENIS LAYANAN'] || ''}</td>
+    </tr>`;
+  }).join('');
+
+  renderPagination(pages);
+}
+
+function renderPagination(pages) {
+  const bar = document.getElementById('paginationBar');
+  if (pages <= 1) { bar.innerHTML = ''; return; }
+
+  let html = '';
+  html += `<button class="page-btn" onclick="gotoPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+
+  const range = [];
+  for (let i = 1; i <= pages; i++) {
+    if (i===1 || i===pages || Math.abs(i-currentPage)<=2) range.push(i);
+    else if (range[range.length-1] !== '…') range.push('…');
+  }
+  range.forEach(p => {
+    if (p === '…') {
+      html += `<span class="page-btn" style="cursor:default;border:none">…</span>`;
+    } else {
+      html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="gotoPage(${p})">${p}</button>`;
+    }
+  });
+
+  html += `<button class="page-btn" onclick="gotoPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>›</button>`;
+  bar.innerHTML = html;
+}
+
+function gotoPage(p) {
+  currentPage = p;
+  renderTable();
+  window.scrollTo({top: 0, behavior:'smooth'});
+}
+
+/* ── export modal ── */
+function openExportModal()  { document.getElementById('exportModal').classList.add('open');  }
+function closeExportModal() { document.getElementById('exportModal').classList.remove('open'); }
+document.getElementById('exportModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeExportModal();
 });
 
+/* ── report generation ── */
+function generateReport() {
+  const bulan = parseInt(document.getElementById('expBulan').value);
+  const tahun = parseInt(document.getElementById('expTahun').value);
+
+  const monthData = allData.filter(item => {
+    const d = parseDate(getTgl(item));
+    return d && d.getMonth()+1 === bulan && d.getFullYear() === tahun;
+  });
+
+  if (!monthData.length) {
+    alert(`Tidak ada data untuk bulan ${BULAN_NAMA[bulan]} ${tahun}.`);
+    return;
+  }
+
+  const FIXED_KEC = ["Batu", "Bumiaji", "Junrejo"];
+  const isLainnya = (kec) => !FIXED_KEC.some(k => k.toLowerCase() === (kec||'').trim().toLowerCase());
+
+  const td = (val, bold) =>
+    `<td style="text-align:center;border:1px solid #999;padding:4px 6px;${bold?'font-weight:700;':''}">${val}</td>`;
+
+  // Build one table for a given subset of data (one JENIS PPKS)
+  function buildTable(ppksData, ppksLabel) {
+    // kecamatan columns from this ppks group's data
+    const kecInGroup = [...new Set(ppksData.map(d => (d.KECAMATAN || '').trim()))];
+    const mainKec    = FIXED_KEC.filter(k => kecInGroup.some(d => d.toLowerCase() === k.toLowerCase()));
+    const groupHasLainnya = kecInGroup.some(d => isLainnya(d));
+    const allKec     = groupHasLainnya ? [...mainKec, 'Lainnya'] : mainKec;
+    const outputColspan = allKec.length + 1;
+
+    const countBy = (indikator, kec) => ppksData.filter(d => {
+      if ((d['JENIS LAYANAN'] || '').trim() !== indikator) return false;
+      const dk = (d.KECAMATAN || '').trim();
+      return kec === 'Lainnya' ? isLainnya(dk) : dk.toLowerCase() === kec.toLowerCase();
+    }).length;
+
+    const indikators = [...new Set(ppksData.map(d => (d['JENIS LAYANAN'] || '').trim()).filter(Boolean))].sort();
+
+    const rows = indikators.map((ind, idx) => {
+      const kecCells = allKec.map(kec => td(countBy(ind, kec))).join('');
+      const total    = ppksData.filter(d => (d['JENIS LAYANAN']||'').trim() === ind).length;
+      return `<tr style="background:${idx%2===0?'#fff':'#f7f9fc'}">
+        <td style="border:1px solid #999;text-align:center;padding:4px 6px">${idx+1}</td>
+        <td style="border:1px solid #999;padding:4px 8px">${ind}</td>
+        ${kecCells}
+        ${td(total, true)}
+      </tr>`;
+    }).join('');
+
+    return `
+    <div style="margin-bottom:28px;">
+      <div style="background:#003a8c;color:#fff;padding:7px 12px;font-weight:bold;font-size:11.5px;border-radius:4px 4px 0 0;letter-spacing:.3px;">
+        ${ppksLabel.toUpperCase()}
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:10.5px;">
+        <thead>
+          <tr style="background:#1a56db;color:#fff;text-align:center;">
+            <th style="border:1px solid #999;padding:6px 4px;width:32px">NO</th>
+            <th style="border:1px solid #999;padding:6px 4px;">INDIKATOR KINERJA / JENIS PELAYANAN SPM</th>
+            ${allKec.map(k=>`<th style="border:1px solid #999;padding:6px 4px;min-width:58px">${k.toUpperCase()}</th>`).join('')}
+            <th style="border:1px solid #999;padding:6px 4px;min-width:68px">TOTAL KESELURUHAN</th>
+          </tr>
+        </thead>
+        <tbody>${rows || '<tr><td colspan="'+(2+outputColspan)+'" style="text-align:center;padding:10px;border:1px solid #999;color:#888">Tidak ada layanan tercatat</td></tr>'}</tbody>
+      </table>
+    </div>`;
+  }
+
+  // Get all unique JENIS PPKS in this month, sorted
+  const ppksList = [...new Set(monthData.map(d => (d['JENIS PPKS'] || '').trim()).filter(Boolean))].sort();
+
+  const allTables = ppksList.map(ppks => {
+    const subset = monthData.filter(d => (d['JENIS PPKS']||'').trim() === ppks);
+    return buildTable(subset, ppks);
+  }).join('');
+
+  const html = `
+  <div style="font-family:Arial,sans-serif;font-size:11px;padding:24px 28px;max-width:980px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:bold;text-transform:uppercase;letter-spacing:.5px;">
+        LAPORAN INDIKATOR PELAYANAN DISABILITAS TRC BULAN ${BULAN_NAMA[bulan].toUpperCase()} ${tahun}
+      </div>
+    </div>
+    ${allTables}
+    <div style="margin-top:40px;text-align:right;font-size:11px;">
+      <p>Batu, ${new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'})}</p>
+      <p style="margin-top:60px;font-weight:bold;">Kepala Bidang</p>
+    </div>
+    <div style="margin-top:16px;font-size:10px;color:#aaa;text-align:center">
+      Dicetak oleh Sistem Dashboard PPKS Kota Batu
+    </div>
+  </div>`;
+
+  const printArea = document.getElementById('printArea');
+  printArea.innerHTML = html;
+  printArea.style.display = 'block';
+
+  closeExportModal();
+
+  // open print dialog
+  const w = window.open('', '_blank', 'width=1100,height=750');
+  w.document.write(`<!DOCTYPE html><html><head><title>Laporan PPKS ${BULAN_NAMA[bulan]} ${tahun}</title>
+  <style>
+    @media print { body { margin: 0; } }
+    body { font-family: Arial, sans-serif; }
+  </style></head><body>${html}
+  <script>window.onload=function(){window.print();}<\/script>
+  </body></html>`);
+  w.document.close();
+}
+
+/* ── INIT ── */
 loadData();
-
 </script>
-
 </body>
 </html>
